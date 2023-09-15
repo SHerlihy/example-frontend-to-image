@@ -4,89 +4,49 @@ import {
     domJSDOM,
     windowJSDOM,
 } from '../spec/helpers/renderer.js';
-import {fireEvent, getAllByRole, findByText, waitFor, getByRole} from '@testing-library/dom'
-
+import {
+    getByText,
+    queryByText,
+    waitFor
+} from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
-
-function traverse(target) {
-  for (const key in target) {
-    if (key !== 'e' && typeof target[key] === 'object') {
-      traverse(target[key]);
-    } else {
-      console.log(key, target[key]);
-    }
-  }
-}
 
 async function content(path) {  
   return await readFile(path, 'utf8')
 }
 
-const scriptTxt = await content('./src/test.js')
+const indexTxt = await content('./src/index.js')
 
-describe("A suite", function() {
-    const script = new Script(scriptTxt)
+describe("text button", function() {
+    const script = new Script(indexTxt)
 
     const vmContext = domJSDOM.getInternalVMContext();
 
-    script.runInContext(vmContext);
+    script.runInContext(vmContext)
 
     const user = userEvent.setup({
         document: windowJSDOM.document,
     })
 
-    it("sanity", async function() {
-        expect(getAllByRole(windowJSDOM.document, 'button').length).toBe(1)
-        console.log(windowJSDOM.document.body.innerHTML)
+    it("changes text when clicked", async function() {
+        const pressedEl = queryByText(windowJSDOM.document, 'pressed btn txt')
+        expect(pressedEl).toBe(null)
 
-        const btnEl = getByRole(windowJSDOM.document, 'button')
+        const btnEl = getByText(windowJSDOM.document, 'init btn txt')
 
         await user.click(btnEl)
 
-        //fireEvent(
-        //    btnEl,
-        //    new windowJSDOM.MouseEvent('click', {
-        //        bubbles: true,
-        //        cancelable: true,
-        //    })
-        //)
+        const tryPressedEl = () => {
+            const qryPressed = queryByText(windowJSDOM.document, 'pressed btn text');
 
-        await waitFor(
-            ()=>expect(getAllByRole(windowJSDOM.document, 'button').length).toBe(2),
-            {
-                container: windowJSDOM.document
+
+            expect(qryPressed).not.toBe(null)
+
+            if (qryPressed !== null) {
+                expect(qryPressed).toBeValid()
             }
-        )
-        console.log(windowJSDOM.document.body.innerHTML)
+        }
+
+         await waitFor(tryPressedEl, {container: windowJSDOM.document})
     })
-
-   // it("runs injected script", async function() {
-   //     const el = windowJSDOM.document.createElement('button');
-   //     el.innerText = "btn two"
-
-   //     windowJSDOM.eval(`document.body.appendChild(${el})`)
-
-   //     await findByText(container, "btn two")
-
-   //     await waitFor(
-   //         ()=>expect(getAllByRole(container, 'button').length).toBe(2)
-   //     )
-
-   //     console.log(container.innerHTML)
-   // })
-
-   // it("contains spec with an expectation", async function() {
-   //     const btnEl = screen.getByRole("button") 
-   //     expect(screen.getAllByRole('button').length).toBe(1)
-   //     expect(btnEl).toHaveTextContent("btnUnpressed")
-   //     await user.click(btnEl)
-   //     expect(screen.getAllByRole('button').length).toBe(2)
-   //     expect(btnEl).toHaveTextContent("btnPressed")
-   //    // const btnEl =screen.getByRole('button') 
-   //    // console.log(btnEl.innerHTML)
-
-   //    // traverse(expect())
-
-   //    // expect(btnEl).toBeArray()
-   // })
-});
+})

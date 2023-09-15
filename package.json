@@ -7,8 +7,7 @@
     "@testing-library/user-event": "^14.4.3",
     "bun-types": "latest",
     "jasmine": "^5.1.0",
-    "jsdom": "^22.1.0",
-    "jsdom-global": "^3.0.2"
+    "jsdom": "^22.1.0"
   },
   "scripts": {
     "start": "live-server",

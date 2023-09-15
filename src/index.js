@@ -1,5 +1,5 @@
 function changeInnerHTML(elId) {
-    document.getElementById(elId).textContent = "Pressed Text";
+    document.getElementById(elId).textContent = "pressed btn text";
 }
 
 function createElement(type, id, content, events = {}) {
@@ -15,7 +15,7 @@ function createElement(type, id, content, events = {}) {
     return el
 }
 
-var $button = createElement("button", "btn", "Init Text", {
+var $button = createElement("button", "btn", "init btn txt", {
     click: () => {
         changeInnerHTML("btn")
     }
