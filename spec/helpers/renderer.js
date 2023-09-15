@@ -1,10 +1,13 @@
 import { JSDOM } from 'jsdom';
 
-const { window: windowJSDOM } = new JSDOM(undefined, {
+const domJSDOM = new JSDOM(undefined, {
     runScripts: "dangerously",
     pretendToBeVisual: true,
-    resources: "usable"
+    resources: "usable",
+    includeNodeLocations: true
 });
+
+const windowJSDOM = domJSDOM.window
 
 Object.defineProperty(globalThis, "window", {
     value: windowJSDOM,
@@ -32,6 +35,7 @@ function render(html) {
 }
 
 export {
+    domJSDOM,
     windowJSDOM,
     render
 }

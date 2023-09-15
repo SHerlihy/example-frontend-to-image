@@ -1,4 +1,7 @@
+import { Script } from "vm";
+import {readFile} from 'fs/promises';
 import {
+    domJSDOM,
     windowJSDOM,
 } from '../spec/helpers/renderer.js';
 import {fireEvent, getAllByRole, findByText, waitFor, getByRole} from '@testing-library/dom'
@@ -15,17 +18,18 @@ function traverse(target) {
   }
 }
 
+async function content(path) {  
+  return await readFile(path, 'utf8')
+}
+
+const scriptTxt = await content('./src/test.js')
+
 describe("A suite", function() {
-    windowJSDOM.eval(`
-        var btnEl = document.createElement('button');
-        btnEl.onclick = appendBtn;
+    const script = new Script(scriptTxt)
 
-        document.body.appendChild(btnEl);
+    const vmContext = domJSDOM.getInternalVMContext();
 
-        function appendBtn(){
-            document.body.appendChild(document.createElement('button'));
-        };
-    `)
+    script.runInContext(vmContext);
 
     const user = userEvent.setup({
         document: windowJSDOM.document,
