@@ -7,9 +7,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: unit test
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.x
-
-      - run: bun ci
+        uses: oven-sh/setup-bun@v1
+      - run: bun install
       - run: bun spec
