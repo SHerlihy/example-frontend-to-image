@@ -1,3 +1,13 @@
 #!/bin/bash
-echo "Hello world" > index.html
-sudo nohup busybox httpd -f -p 80 &
+
+sudo dpkg --configure -a
+find /var/lib/apt/lists -type f  |xargs rm -f >/dev/null \
+sudo apt -y update
+
+sudo dpkg --remove apache2
+
+sudo apt-get -y install -f
+sudo apt -f -y install apache2
+
+sudo apache2 -v
+sudo nohup busybox httpd -f -p 8080 &

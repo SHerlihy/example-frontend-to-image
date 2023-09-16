@@ -22,7 +22,7 @@ source "amazon-ebs" "frontend-example" {
   }
   ssh_username = "ubuntu"
 }
-
+// 111644099040
 build {
   name = "frontend-example"
   sources = [
