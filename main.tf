@@ -122,6 +122,33 @@ resource "terraform_data" "provision_server" {
   }
 
   provisioner "remote-exec" {
-      script = "./config-server.sh"
+      inline = [
+        "mkdir /home/ubuntu/www",
+        "mkdir /home/ubuntu/www/public",
+        "mkdir /home/ubuntu/www/src"
+      ]
+  }
+
+  provisioner "file" {
+      source = "./index.html"
+      destination = "/home/ubuntu/www/index.html"
+  }
+
+  provisioner "file" {
+      source = "./public/"
+      destination = "/home/ubuntu/www/public/"
+  }
+
+  provisioner "file" {
+      source = "./src/"
+      destination = "/home/ubuntu/www/src/"
+  }
+
+  provisioner "remote-exec" {
+      script = "./config_server.sh"
+  }
+
+  provisioner "remote-exec" {
+      script = "./position_files.sh"
   }
 }

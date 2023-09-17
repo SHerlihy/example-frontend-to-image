@@ -34,17 +34,17 @@ build {
 
   provisioner "file" {
       source = "./index.html"
-      destination = "/etc"
+      destination = "/var/www"
   }
 
   provisioner "file" {
       source = "./public"
-      destination = "/etc/public"
+      destination = "/var/www/public"
   }
 
   provisioner "file" {
       source = "./src"
-      destination = "/etc/src"
+      destination = "/var/www/src"
   }
 
   provisioner "file" {
