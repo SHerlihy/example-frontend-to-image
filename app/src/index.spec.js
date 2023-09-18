@@ -1,9 +1,8 @@
 import { Script } from "vm";
 import {readFile} from 'fs/promises';
 import {
-    domJSDOM,
-    windowJSDOM,
-} from '../spec/helpers/renderer.js';
+    globalJSDOM,
+} from '../../spec/helpers/renderer.js';
 import {
     getByText,
     queryByText,
@@ -11,16 +10,18 @@ import {
 } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 
+const windowJSDOM = globalJSDOM.window
+
 async function content(path) {  
   return await readFile(path, 'utf8')
 }
 
-const indexTxt = await content('./src/index.js')
+const indexTxt = await content('./app/src/index.js')
 
 describe("text button", function() {
     const script = new Script(indexTxt)
 
-    const vmContext = domJSDOM.getInternalVMContext();
+    const vmContext = globalJSDOM.getInternalVMContext();
 
     script.runInContext(vmContext)
 
