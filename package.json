@@ -10,7 +10,7 @@
     "jsdom": "^22.1.0"
   },
   "scripts": {
-    "start": "live-server",
+    "start": "live-server ./app",
     "spec": "jasmine --config=jasmine.json"
   },
   "type": "module"
