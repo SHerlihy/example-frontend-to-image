@@ -8,4 +8,3 @@ sudo dpkg --remove apache2
 
 sudo apt-get -y install -f
 sudo apt -f -y install apache2
-

@@ -27,15 +27,6 @@ resource "aws_default_subnet" "default_az1" {
   }
 }
 
-//data "aws_ami" "ubuntu" {
-//  owners      = ["111644099040"]
-//
-//  filter {
-//    name   = "name"
-//    values = ["apache-hello-20230525231131"]
-//  }
-//}
-
 resource "aws_security_group" "allow_ssh" {
   name   = "allow_ssh"
   vpc_id = aws_default_vpc.default.id
@@ -74,23 +65,17 @@ resource "aws_security_group_rule" "egress_all_ports" {
 
 data "aws_ami" "ubuntu" {
   most_recent = true
+  owners      = ["111644099040"]
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["frontend-example/20230918141619"]
   }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
 }
 
 resource "aws_key_pair" "ssh-key" {
   key_name   = "ssh-key"
-  public_key = file(".ssh/id_rsa.pub")
+  public_key = file("../.ssh/id_rsa.pub")
 }
 
 resource "aws_instance" "web" {
@@ -104,7 +89,7 @@ resource "aws_instance" "web" {
   key_name = aws_key_pair.ssh-key.key_name
 
   tags = {
-    Name = "HelloWorld"
+    Name = "frontend_example"
   }
 }
 
@@ -116,40 +101,9 @@ resource "terraform_data" "provision_server" {
     host = aws_instance.web.public_ip
     user = "ubuntu"
 
-    private_key = file(".ssh/id_rsa")
+    private_key = file("../.ssh/id_rsa")
 
     timeout = "2m"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "mkdir /home/ubuntu/www",
-      "mkdir /home/ubuntu/www/public",
-      "mkdir /home/ubuntu/www/src"
-    ]
-  }
-
-  provisioner "file" {
-    source      = "./index.html"
-    destination = "/home/ubuntu/www/index.html"
-  }
-
-  provisioner "file" {
-    source      = "./public/"
-    destination = "/home/ubuntu/www/public/"
-  }
-
-  provisioner "file" {
-    source      = "./src/"
-    destination = "/home/ubuntu/www/src/"
-  }
-
-  provisioner "remote-exec" {
-    script = "./config_server.sh"
-  }
-
-  provisioner "remote-exec" {
-    script = "./position_files.sh"
   }
 
   provisioner "remote-exec" {
