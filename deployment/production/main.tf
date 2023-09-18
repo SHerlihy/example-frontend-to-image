@@ -69,7 +69,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["frontend-example/20230918141619"]
+    values = ["frontend-example/*"]
   }
 }
 
