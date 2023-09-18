@@ -27,15 +27,6 @@ resource "aws_default_subnet" "default_az1" {
   }
 }
 
-//data "aws_ami" "ubuntu" {
-//  owners      = ["111644099040"]
-//
-//  filter {
-//    name   = "name"
-//    values = ["apache-hello-20230525231131"]
-//  }
-//}
-
 resource "aws_security_group" "allow_ssh" {
   name   = "allow_ssh"
   vpc_id = aws_default_vpc.default.id
@@ -90,7 +81,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_key_pair" "ssh-key" {
   key_name   = "ssh-key"
-  public_key = file(".ssh/id_rsa.pub")
+  public_key = file("../.ssh/id_rsa.pub")
 }
 
 resource "aws_instance" "web" {
@@ -116,7 +107,7 @@ resource "terraform_data" "provision_server" {
     host = aws_instance.web.public_ip
     user = "ubuntu"
 
-    private_key = file(".ssh/id_rsa")
+    private_key = file("../.ssh/id_rsa")
 
     timeout = "2m"
   }
@@ -130,26 +121,26 @@ resource "terraform_data" "provision_server" {
   }
 
   provisioner "file" {
-    source      = "./index.html"
+    source      = "../../app/index.html"
     destination = "/home/ubuntu/www/index.html"
   }
 
   provisioner "file" {
-    source      = "./public/"
+    source      = "../../app/public/"
     destination = "/home/ubuntu/www/public/"
   }
 
   provisioner "file" {
-    source      = "./src/"
+    source      = "../../app/src/"
     destination = "/home/ubuntu/www/src/"
   }
 
   provisioner "remote-exec" {
-    script = "./config_server.sh"
+    script = "../provision_scripts/config_server.sh"
   }
 
   provisioner "remote-exec" {
-    script = "./position_files.sh"
+    script = "../provision_scripts/position_files.sh"
   }
 
   provisioner "remote-exec" {
