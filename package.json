@@ -11,7 +11,10 @@
   },
   "scripts": {
     "start": "live-server ./app",
-    "spec": "jasmine --config=jasmine.json"
+    "spec": "jasmine --config=jasmine.json",
+    "stage": "cd deployment/staging && terraform apply -auto-approve",
+    "image": "packer build ./deployment/imaging/aws-ubuntu.pkr.hcl",
+    "deploy": "cd deployment/production && terraform destroy -auto-approve && terraform apply -auto-approve"
   },
   "type": "module"
 }
