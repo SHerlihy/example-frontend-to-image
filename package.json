@@ -14,7 +14,7 @@
     "spec": "jasmine --config=jasmine.json",
     "stage": "cd deployment/staging && terraform apply -auto-approve",
     "image": "packer init deployment/imaging && packer build deployment/imaging",
-    "deploy": "cd deployment/production && terraform destroy -auto-approve && terraform apply -auto-approve"
+    "deploy": "cd deployment/production && terraform destroy -auto-approve && TF_VAR_SSH_PUB_KEY=file(../.ssh/id_rsa.pub) TF_VAR_SSH_PVT_KEY=file(../.ssh/id_rsa) terraform apply -auto-approve"
   },
   "type": "module"
 }
