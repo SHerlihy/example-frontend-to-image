@@ -13,8 +13,7 @@ jobs:
         uses: oven-sh/setup-bun@v1
 
       - run: bun install packer
-      - run: packer apply -auto-approve ./deployment/imaging/aws-ubuntu.pkr.hcl
+      - run: bun run image
 
       - run: bun install terraform
-      - run: terraform destroy -auto-approve ./deployment/production/main.tf
-      - run: terraform apply -auto-approve ./deployment/production/main.tf
+      - run: bun run deploy

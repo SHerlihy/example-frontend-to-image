@@ -52,27 +52,27 @@ build {
   }
 
   provisioner "file" {
-    source      = "../../app/index.html"
+    source      = "./app/index.html"
     destination = "/home/ubuntu/www/index.html"
   }
 
   provisioner "file" {
-    source      = "../../app/public/"
+    source      = "./app/public/"
     destination = "/home/ubuntu/www/public/"
   }
 
   provisioner "file" {
-    source      = "../../app/src/"
+    source      = "./app/src/"
     destination = "/home/ubuntu/www/src/"
   }
 
   provisioner "file" {
-    source      = "../provision_scripts/config_server.sh"
+    source      = "./deployment/provision_scripts/config_server.sh"
     destination = "~/config_server.sh"
   }
 
   provisioner "file" {
-    source      = "../provision_scripts/position_files.sh"
+    source      = "./deployment/provision_scripts/position_files.sh"
     destination = "~/position_files.sh"
   }
 

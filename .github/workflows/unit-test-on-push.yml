@@ -12,4 +12,4 @@ jobs:
       - name: unit test
         uses: oven-sh/setup-bun@v1
       - run: bun install
-      - run: bun spec
+      - run: bun run spec
