@@ -14,6 +14,7 @@ jobs:
       - run: bun install
       - run: bun run spec
 
+      - run: bun install node-gyp
       - run: bun install packer
       - run: cd node_modules/contextify && node-gyp rebuild
       - run: ls ./node_modules | cat
