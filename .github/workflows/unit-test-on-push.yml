@@ -14,15 +14,14 @@ jobs:
       - run: bun install
       - run: bun run spec
 
-      - run: rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+      - run: sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
       - run: export PATH=$PATH:/usr/local/go/bin
-      - run:  go version
+      - run: go version
 
       - run: git clone https://github.com/hashicorp/terraform.git
       - run: cd terraform
       - run: go install
       - run: echo $PATH
-      - run: mv ~/Downloads/terraform /usr/local/bin/
+      - run: sudo mv ~/Downloads/terraform /usr/local/bin/
 
-      - run: sudo apt-get install terraform
       - run: bun run deploy
