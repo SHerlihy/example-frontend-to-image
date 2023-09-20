@@ -13,3 +13,8 @@ jobs:
         uses: oven-sh/setup-bun@v1
       - run: bun install
       - run: bun run spec
+
+      - run: bun install packer
+      - run: bun install bindings
+      - run: bun run image
+
