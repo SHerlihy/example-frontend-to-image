@@ -15,6 +15,6 @@ jobs:
       - run: bun run spec
 
       - run: bun install packer
-      - run: bun install bindings
+      - run: ls ./node_modules | cat
       - run: bun run image
 
