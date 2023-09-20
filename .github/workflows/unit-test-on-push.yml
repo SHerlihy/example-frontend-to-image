@@ -15,5 +15,9 @@ jobs:
       - run: bun run spec
 
       - run: sudo apt install packer
-      - run: bun run image
 
+      - name: Create Image
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: bun run image
