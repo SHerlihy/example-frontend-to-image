@@ -1,0 +1,20 @@
+name: Deploy on Main
+run-name: Deploy
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  Deploy-Image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: unit test
+        uses: oven-sh/setup-bun@v1
+
+      - run: bun install packer
+      - run: packer apply -auto-approve ./deployment/imaging/aws-ubuntu.pkr.hcl
+
+      - run: bun install terraform
+      - run: terraform destroy -auto-approve ./deployment/production/main.tf
+      - run: terraform apply -auto-approve ./deployment/production/main.tf
