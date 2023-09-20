@@ -16,6 +16,7 @@ jobs:
 
       - run: bun install packer
       - run: ls ./node_modules | cat
+      - run: ls ./node_modules/contextify | cat
 
       - run: bun run image
 
