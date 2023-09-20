@@ -12,5 +12,13 @@ jobs:
       - name: unit test
         uses: oven-sh/setup-bun@v1
 
-      - run: bun install terraform
+      - run: sudo apt install packer
+
+      - name: Create Image
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+        run: bun run image
+      - run: sudo apt-get install terraform
       - run: bun run deploy
