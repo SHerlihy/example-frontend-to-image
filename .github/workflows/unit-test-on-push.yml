@@ -23,6 +23,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - run: mkdir ./deployment/.ssh
       - run: ssh-keygen -q -f ./deployment/.ssh/id_rsa -N "" -O no-touch-required -t rsa 
+      - run: export TF_VAR_AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+      - run: export TF_VAR_AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - run: ls ./deployment/.ssh
       - run: cd ./deployment/production && terraform init
       - run: cd ./deployment/production && terraform destroy -auto-approve

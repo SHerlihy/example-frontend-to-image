@@ -1,3 +1,11 @@
+variable "TF_VAR_AWS_ACCESS_KEY_ID" {
+    type = string
+}
+
+variable "TF_VAR_AWS_SECRET_ACCESS_KEY" {
+    type = string
+}
+
 terraform {
   required_providers {
     aws = {
@@ -11,6 +19,8 @@ terraform {
 
 provider "aws" {
   region = "eu-west-2"
+  access_key = var.TF_VAR_AWS_ACCESS_KEY_ID
+  secret_key = var.TF_VAR_AWS_SECRET_ACCESS_KEY
 }
 
 resource "aws_default_vpc" "default" {
