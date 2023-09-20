@@ -14,16 +14,12 @@ jobs:
       - run: bun install
       - run: bun run spec
 
-      - run: curl https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
-      - run: sudo rm -rf /usr/local/go 
-      - run: sudo tar -C /usr/local -xzf ~/Downloads/go1.21.1.linux-amd64.tar.gz
-      - run: export PATH=$PATH:/usr/local/go/bin
-      - run: go version
-
-      - run: git clone https://github.com/hashicorp/terraform.git
-      - run: cd terraform
-      - run: go install
-      - run: echo $PATH
-      - run: sudo mv ~/Downloads/terraform /usr/local/bin/
-
-      - run: bun run deploy
+      - uses: actions/setup-go@v4
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.5
+      - name: Deploy using Terraform
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: bun run deploy
