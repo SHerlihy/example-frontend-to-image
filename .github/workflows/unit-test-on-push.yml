@@ -23,6 +23,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           TF_VAR_SSH_PUB_KEY: ${{ secrets.SSH_PUB_KEY }}
           TF_VAR_SSH_PVT_KEY: ${{ secrets.SSH_PVT_KEY }}
-      - run: cd ./deployment/production terraform init
-      - run: cd ./deployment/production terraform destroy -auto-approve
-      - run: cd ./deployment/production terraform apply -auto-approve
+      - run: cd ./deployment/production && terraform init
+      - run: cd ./deployment/production && terraform destroy -auto-approve
+      - run: cd ./deployment/production && terraform apply -auto-approve
