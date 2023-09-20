@@ -1,11 +1,3 @@
-variable "TF_VAR_SSH_PUB_KEY" {
-    type = string
-}
-
-variable "TF_VAR_SSH_PVT_KEY" {
-    type = string
-}
-
 terraform {
   required_providers {
     aws = {
@@ -83,7 +75,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_key_pair" "ssh-key" {
   key_name   = "ssh-key"
-  public_key = var.TF_VAR_SSH_PUB_KEY
+  public_key = file("../.ssh/id_rsa.pub")
 }
 
 resource "aws_instance" "web" {
@@ -109,7 +101,7 @@ resource "terraform_data" "provision_server" {
     host = aws_instance.web.public_ip
     user = "ubuntu"
 
-    private_key = var.TF_VAR_SSH_PVT_KEY
+    private_key = file("../.ssh/id_rsa")
 
     timeout = "2m"
   }
