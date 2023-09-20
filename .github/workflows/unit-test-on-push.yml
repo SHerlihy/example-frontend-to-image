@@ -16,7 +16,7 @@ jobs:
 
       - run: curl https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
       - run: sudo rm -rf /usr/local/go 
-      - run: sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+      - run: sudo tar -C /usr/local -xzf ~/Downloads/go1.21.1.linux-amd64.tar.gz
       - run: export PATH=$PATH:/usr/local/go/bin
       - run: go version
 
