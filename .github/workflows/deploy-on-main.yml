@@ -13,6 +13,7 @@ jobs:
         uses: oven-sh/setup-bun@v1
 
       - run: bun install packer
+      - run: bun install bindings
       - run: bun run image
 
       - run: bun install terraform

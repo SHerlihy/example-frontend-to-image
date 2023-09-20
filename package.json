@@ -7,7 +7,9 @@
     "@testing-library/user-event": "^14.4.3",
     "bun-types": "latest",
     "jasmine": "^5.1.0",
-    "jsdom": "^22.1.0"
+    "jsdom": "^22.1.0",
+    "packer": "^0.0.6",
+    "terraform": "^1.23.0"
   },
   "scripts": {
     "start": "live-server ./app",
