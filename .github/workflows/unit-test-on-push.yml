@@ -1,6 +1,9 @@
 name: GitHub Actions Demo
 run-name: Run unit tests
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - 'main'
 jobs:
   Unit-Test:
     runs-on: ubuntu-latest
