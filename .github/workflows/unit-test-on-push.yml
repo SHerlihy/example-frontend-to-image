@@ -27,5 +27,5 @@ jobs:
       - run: export TF_VAR_AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - run: ls ./deployment/.ssh
       - run: cd ./deployment/production && terraform init
-      - run: cd ./deployment/production && terraform destroy -auto-approve
-      - run: cd ./deployment/production && terraform apply -auto-approve
+      - run: cd ./deployment/production && terraform destroy -var='TF_VAR_AWS_ACCESS_KEY_ID=env.TF_VAR_AWS_ACCESS_KEY_ID' -var='TF_VAR_AWS_SECRET_ACCESS_KEY=env.TF_VAR_AWS_SECRET_ACCESS_KEY' -auto-approve
+      - run: cd ./deployment/production && terraform apply -var='TF_VAR_AWS_ACCESS_KEY_ID=env.TF_VAR_AWS_ACCESS_KEY_ID' -var='TF_VAR_AWS_SECRET_ACCESS_KEY=env.TF_VAR_AWS_SECRET_ACCESS_KEY' -auto-approve
